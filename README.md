@@ -1,5 +1,6 @@
-# ReTech — DDD / CitizenTech | Global Solution FIAP 2026.2
+# ReTech — DDD / CitizenTech | Global Solution FIAP
 
+Java 26.** Projeto Java 26 + Spring Boot 4.1.2 + Oracle
 ## Identidade da CitizenTech
 
 - **Nome:** ReTech — Tecnologia que ganha novas possibilidades
@@ -9,7 +10,8 @@
 - **Solução:** máquina recebe eletrônicos, atribui pontos por categoria e quantidade e vincula o descarte a instituições/parceiros
 - **ODS:** 12 (Consumo e Produção Responsáveis), 10 (Redução das Desigualdades), 4 (Educação de Qualidade)
 
-## DER oficial — 
+## DER oficial 
+
 | Tabela | Colunas | Relacionamentos |
 |---|---|---|
 | `T_USUARIO` | `id_usuario`, `nome_completo`, `cpf`, `pontos_saldo`, `data_cadastro` | 1 usuário realiza 0..N descartes |
@@ -19,7 +21,7 @@
 | `T_DESCARTE` | `id_descarte`, `id_usuario`, `id_maquina`, `id_categoria`, `id_instituicao`, `data_registro`, `quantidade`, `pontos_gerados` | quatro FKs obrigatórias |
 
 
-### Regras de negócio atuais (modificáveis por decisão do grupo)
+### Regras de negócio atuais 
 
 1. Cadastra-se usuário, categoria, máquina e instituição (as quatro chaves devem existir antes de um descarte).
 2. Ao registrar um descarte, calcula-se `pontosGerados = quantidade × pontosPorUnidade` (pontuação fictícia acadêmica, não avaliação automática por IA).
@@ -30,27 +32,35 @@
 7. O banco do DER **não tem status do descarte, identificação individual do aparelho, data de destinação nem histórico de resgate**. Por isso, *vincular um descarte a uma instituição não comprova que a doação/reciclagem ocorreu*. Não inventamos essas colunas.
 8. `TIPO_PARCEIRO` e `STATUS_OPERACAO` são textos (`VARCHAR2`) sem enum no DER, portanto a API não força valores específicos nesta versão.
 
-**Privacidade:** CPF e CNPJ nos exemplos são fictícios. O MVP não tem autenticação; use somente dados fictícios em testes e não publique uma API aberta com CPF real antes de implementar segurança/LGPD.
-
+**Privacidade:** CPF e CNPJ nos exemplos são fictícios.
 ## Banco Oracle e senha
 
 - Usuário Oracle de referência: `rm566198`.
-- A senha: 300906
-- O host, porta e service name do Oracle FIAP ainda não foram Definidos
+- A senha:300906
+- O host: jdbc:oracle:thin:@//oracle.fiap.com.br:1521/ORCL
 - A variável `DB_USERNAME` possui `rm566198` como valor padrão e pode ser substituída.
 
-Arquivo de exemplo: `.env.example` (a linha `DB_PASSWORD=` foi deixada vazia de propósito).
 
-### Rodando no IntelliJ IDEA (recomendado)
+### Rodando no IntelliJ IDEA 
 
-1. Instale **JDK 21** e **Maven 3.9+**; abra a pasta do projeto no IntelliJ.
+1. Instale **JDK 26** e **Maven 3.9+**; abra a pasta do projeto no IntelliJ.
 2. Use a conexão existente do **Oracle FIAP** no SQL Developer, verificando se as cinco tabelas já existem. Se não existirem, execute `src/main/resources/db/schema-oracle.sql` apenas uma vez.
 3. Em **Run → Edit Configurations → Environment variables**, cadastre:
-   - `DB_URL=jdbc:oracle:thin:@//SEU_HOST_FIAP:1521/SEU_SERVICE_NAME`
+   - `DB_URL=jdbc:oracle:thin:@//oracle.fiap.com.br:1521/ORCL`
    - `DB_USERNAME=rm566198`
    - `DB_PASSWORD=300906`
 4. Inicie `ReTechApplication` no IntelliJ ou `mvn spring-boot:run` no terminal com as mesmas variáveis exportadas.
 5. Acesse `http://localhost:8080/actuator/health` e teste `requisicoes/api.http` em ordem.
+
+
+**Windows PowerShell — somente exemplo:**
+
+```powershell
+$env:DB_URL="jdbc:oracle:thin:@//SEU_HOST_FIAP:1521/SEU_SERVICE_NAME"
+$env:DB_USERNAME="rm566198"
+$env:DB_PASSWORD=Read-Host "Senha do Oracle FIAP"
+mvn spring-boot:run
+```
 
 ## Endpoints REST disponíveis
 
@@ -71,7 +81,7 @@ Retornos típicos: `200` consulta/atualização; `201` criação; `204` exclusã
 ```text
 ReTech_DDD_Oracle_DER_v2/
 ├── pom.xml
-├── Dockerfile                    # build Maven + runtime Java 21
+├── Dockerfile                    # build Maven + runtime Java 26
 ├── render.yaml                   # modelo, não publicado
 ├── .env.example                  # senha em branco
 ├── .gitignore                    # exclui .env
@@ -91,8 +101,5 @@ ReTech_DDD_Oracle_DER_v2/
 └── prototipos/index.html         # protótipo visual estático
 ```
 
-## Render e entrega
-
-Deploy **não realizado**. Para o Render: conectar repositório do GitHub ao serviço Docker e preencher `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` **somente no painel privado**. A aplicação pode falhar no Render se o Oracle FIAP exigir VPN ou restringir conexões externas. Confirmar acessibilidade real antes de incluir link no PDF.
-
+## Deploy
 
