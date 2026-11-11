@@ -42,4 +42,31 @@ public class TratadorGlobalException {
     public ResponseEntity<ErroApi> geral(Exception e, HttpServletRequest r) {
         return resposta(HttpStatus.INTERNAL_SERVER_ERROR,"Erro interno na API",r,Map.of());
     }
+
+    @ExceptionHandler(
+            org.springframework.web.server.ResponseStatusException.class
+    )
+    public ResponseEntity<ErroApi> erroHttp(
+            org.springframework.web.server.ResponseStatusException e,
+            jakarta.servlet.http.HttpServletRequest request
+    ) {
+
+        HttpStatus status = HttpStatus.resolve(
+                e.getStatusCode().value()
+        );
+
+        if (status == null) {
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        return resposta(
+                status,
+                e.getReason() == null
+                        ? "Requisicao invalida"
+                        : e.getReason(),
+                request,
+                java.util.Map.of()
+        );
+    }
+
 }
