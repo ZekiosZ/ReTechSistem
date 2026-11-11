@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ReTech</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="app">
+    <div class="machine-screen">
+        <header class="topbar">
+            <div class="brand">
+                <span class="logo">♻</span>
+                <div>
+                    <h1>ReTech</h1>
+                    <p>Tecnologia que ganha novas possibilidades</p>
+                </div>
+            </div>
+
+            <div class="status-box">
+                <span class="wifi">📶</span>
+                <span id="clock">10:24</span>
+            </div>
+        </header>
+
+        <main class="content">
+            <section class="hero">
+                <div class="hero-text">
+                    <h2>Descarte, reutilize,<br>recicle e ganhe recompensas.</h2>
+                    <p>
+                        Encaminhe seu eletrônico para reuso, doação ou reciclagem
+                        e acumule pontos de forma consciente.
+                    </p>
+                </div>
+
+                <div class="hero-icon">
+                    <div class="phone-circle">
+                        <span>📱</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="steps">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <div class="step-icon">🔍</div>
+                    <h3>Identifica</h3>
+                    <p>Reconhece o aparelho</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <div class="step-icon">⭐</div>
+                    <h3>Avalia e oferece recompensa</h3>
+                    <p>Calcula seus pontos</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <div class="step-icon">♻</div>
+                    <h3>Encaminha</h3>
+                    <p>Reuso, doação ou reciclagem</p>
+                </div>
+            </section>
+
+            <section class="actions">
+                <button class="main-btn" onclick="abrirTela('descarte')">COMEÇAR →</button>
+            </section>
+
+            <section class="panel" id="painel-dinamico">
+                <h3>Bem-vindo à ReTech</h3>
+                <p>Selecione uma opção abaixo para continuar.</p>
+            </section>
+
+            <section class="bottom-menu">
+                <button onclick="abrirTela('descarte')">Descartar aparelho</button>
+                <button onclick="abrirTela('pontos')">Meus pontos</button>
+                <button onclick="abrirTela('historico')">Histórico</button>
+            </section>
+        </main>
+    </div>
+
+    <aside class="side-module">
+        <div class="camera-box">
+            <div class="camera-lens"></div>
+            <p>Câmera / Leitor de dispositivo</p>
+        </div>
+
+        <div class="qr-box">
+            <div class="qr-placeholder">⌘</div>
+            <p>QR Code / Comprovante</p>
+        </div>
+    </aside>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
