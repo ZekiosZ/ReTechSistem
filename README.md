@@ -4,6 +4,10 @@
 
 A ReTech é uma plataforma de descarte de resíduos eletrônicos que conecta cidadãos, pontos de coleta e instituições parceiras. Cada descarte registrado gera pontos conforme a categoria e a quantidade de equipamentos, incentivando a reciclagem, o reuso e a destinação responsável.
 
+##Deploy
+
+https://retech-api-13j1.onrender.com
+
 ## Funcionalidades
 
 - Cadastro e login com CPF e senha.
