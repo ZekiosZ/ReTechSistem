@@ -82,38 +82,78 @@ public class InicializacaoBanco implements ApplicationRunner {
         );
     }
 
+
     private void sincronizarSequencia() {
 
-        Long maiorId = jdbc.queryForObject(
-                "SELECT NVL(MAX(ID_USUARIO), 0) FROM T_USUARIO",
-                Long.class
+        garantirSequencia(
+                "SEQ_T_USUARIO",
+                "T_USUARIO",
+                "ID_USUARIO"
         );
+
+        garantirSequencia(
+                "SEQ_T_CATEGORIA_ELETRO",
+                "T_CATEGORIA_ELETRO",
+                "ID_CATEGORIA"
+        );
+
+        garantirSequencia(
+                "SEQ_T_MAQUINA",
+                "T_MAQUINA",
+                "ID_MAQUINA"
+        );
+
+        garantirSequencia(
+                "SEQ_T_INSTITUICAO",
+                "T_INSTITUICAO",
+                "ID_INSTITUICAO"
+        );
+
+        garantirSequencia(
+                "SEQ_T_DESCARTE",
+                "T_DESCARTE",
+                "ID_DESCARTE"
+        );
+    }
+
+    private void garantirSequencia(
+            String nomeSequencia,
+            String nomeTabela,
+            String colunaId
+    ) {
+
+        Integer existe = jdbc.queryForObject(
+                """
+                SELECT COUNT(*)
+                FROM USER_SEQUENCES
+                WHERE SEQUENCE_NAME = ?
+                """,
+                Integer.class,
+                nomeSequencia
+        );
+
+        if (existe != null && existe > 0) {
+            System.out.println(
+                    "Sequencia existente: " + nomeSequencia
+            );
+            return;
+        }
 
         Long proximoId = jdbc.queryForObject(
-                "SELECT SEQ_T_USUARIO.NEXTVAL FROM DUAL",
+                "SELECT NVL(MAX(" + colunaId +
+                        "), 0) + 1 FROM " + nomeTabela,
                 Long.class
         );
 
-        if (maiorId != null && proximoId != null
-                && proximoId <= maiorId) {
+        jdbc.execute(
+                "CREATE SEQUENCE " + nomeSequencia +
+                        " START WITH " + proximoId +
+                        " INCREMENT BY 1 NOCACHE NOCYCLE"
+        );
 
-            long incremento = maiorId - proximoId + 1;
-
-            jdbc.execute(
-                    "ALTER SEQUENCE SEQ_T_USUARIO INCREMENT BY "
-                            + incremento
-            );
-
-            try {
-                jdbc.queryForObject(
-                        "SELECT SEQ_T_USUARIO.NEXTVAL FROM DUAL",
-                        Long.class
-                );
-            } finally {
-                jdbc.execute(
-                        "ALTER SEQUENCE SEQ_T_USUARIO INCREMENT BY 1"
-                );
-            }
-        }
+        System.out.println(
+                "Sequencia criada: " + nomeSequencia
+        );
     }
+
 }
