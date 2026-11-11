@@ -38,8 +38,6 @@ Java 26.** Projeto Java 26 + Spring Boot 4.1.2 + Oracle
 - Usuário Oracle de referência: `rm566198`.
 - A senha:300906
 - O host: jdbc:oracle:thin:@//oracle.fiap.com.br:1521/ORCL
-- A variável `DB_USERNAME` possui `rm566198` como valor padrão e pode ser substituída.
-
 
 ### Rodando no IntelliJ IDEA 
 
@@ -52,15 +50,6 @@ Java 26.** Projeto Java 26 + Spring Boot 4.1.2 + Oracle
 4. Inicie `ReTechApplication` no IntelliJ ou `mvn spring-boot:run` no terminal com as mesmas variáveis exportadas.
 5. Acesse `http://localhost:8080/actuator/health` e teste `requisicoes/api.http` em ordem.
 
-
-**Windows PowerShell — somente exemplo:**
-
-```powershell
-$env:DB_URL="jdbc:oracle:thin:@//SEU_HOST_FIAP:1521/SEU_SERVICE_NAME"
-$env:DB_USERNAME="rm566198"
-$env:DB_PASSWORD=Read-Host "Senha do Oracle FIAP"
-mvn spring-boot:run
-```
 
 ## Endpoints REST disponíveis
 

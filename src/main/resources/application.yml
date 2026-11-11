@@ -1,22 +1,30 @@
+
 spring:
   application:
     name: retech-api
+
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME:rm566198}
-    password: ${DB_PASSWORD}
+    url: "jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL"
+    username: "rm566198"
+    password: "300906"
     driver-class-name: oracle.jdbc.OracleDriver
+
     hikari:
       maximum-pool-size: 3
       minimum-idle: 0
       connection-timeout: 10000
+
   jackson:
     time-zone: America/Sao_Paulo
+
 server:
-  address: 0.0.0.0
-  port: ${PORT:8080}
+  port: 8080
+
 management:
   endpoints:
     web:
       exposure:
         include: health,info
+  endpoint:
+    health:
+      show-details: always
