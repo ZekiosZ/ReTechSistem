@@ -1,0 +1,40 @@
+erDiagram
+    T_USUARIO ||--o{ T_DESCARTE : registra
+    T_MAQUINA ||--o{ T_DESCARTE : recebe
+    T_CATEGORIA_ELETRO ||--o{ T_DESCARTE : classifica
+    T_INSTITUICAO ||--o{ T_DESCARTE : vincula
+
+    T_USUARIO {
+      NUMBER_10 id_usuario PK
+      VARCHAR2_100 nome_completo
+      VARCHAR2_11 cpf
+      NUMBER_6 pontos_saldo
+      DATE data_cadastro
+    }
+    T_CATEGORIA_ELETRO {
+      NUMBER_10 id_categoria PK
+      VARCHAR2_50 nome_categoria
+      NUMBER_4 pontos_por_unidade
+    }
+    T_MAQUINA {
+      NUMBER_10 id_maquina PK
+      VARCHAR2_100 bairro_localizacao
+      VARCHAR2_8 cep
+      VARCHAR2_20 status_operacao
+    }
+    T_INSTITUICAO {
+      NUMBER_10 id_instituicao PK
+      VARCHAR2_100 nome_fantasia
+      VARCHAR2_14 cnpj
+      VARCHAR2_30 tipo_parceiro
+    }
+    T_DESCARTE {
+      NUMBER_10 id_descarte PK
+      NUMBER_10 id_usuario FK
+      NUMBER_10 id_maquina FK
+      NUMBER_10 id_categoria FK
+      NUMBER_10 id_instituicao FK
+      DATE data_registro
+      NUMBER_3 quantidade
+      NUMBER_6 pontos_gerados
+    }

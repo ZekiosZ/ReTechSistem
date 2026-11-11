@@ -1,0 +1,71 @@
+@host = http://localhost:8080
+
+### 1. Criar usuario ficticio
+POST {{host}}/api/v1/usuarios
+Content-Type: application/json
+
+{"nomeCompleto":"Pessoa Exemplo","cpf":"12345678901"}
+
+### 2. Criar categoria de celular com 120 pontos por unidade
+POST {{host}}/api/v1/categorias
+Content-Type: application/json
+
+{"nomeCategoria":"Celulares","pontosPorUnidade":120}
+
+### 3. Cadastrar maquina
+POST {{host}}/api/v1/maquinas
+Content-Type: application/json
+
+{"bairroLocalizacao":"Paulista","cep":"01310000","statusOperacao":"ATIVA"}
+
+### 4. Cadastrar instituicao
+POST {{host}}/api/v1/instituicoes
+Content-Type: application/json
+
+{"nomeFantasia":"Instituicao Exemplo","cnpj":"12345678000199","tipoParceiro":"REUSO"}
+
+### 5. Registrar descarte (alterar IDs conforme as respostas anteriores)
+POST {{host}}/api/v1/descartes
+Content-Type: application/json
+
+{"idUsuario":1,"idMaquina":1,"idCategoria":1,"idInstituicao":1,"quantidade":2}
+
+### Resultado: 2 x 120 = 240 pontos; saldo do usuario 240.
+### 6. Consultar usuario (saldo)
+GET {{host}}/api/v1/usuarios/1
+
+### 7. Consultar descartes de usuario
+GET {{host}}/api/v1/descartes?idUsuario=1
+
+### 8. Atualizar descarte (quantidade 3 => 360 pontos, delta +120)
+PUT {{host}}/api/v1/descartes/1
+Content-Type: application/json
+
+{"idMaquina":1,"idCategoria":1,"idInstituicao":1,"quantidade":3}
+
+### 9. Indicadores de impacto
+GET {{host}}/api/v1/impacto
+
+### 10. Excluir descarte (desconta 360 pontos do usuario)
+DELETE {{host}}/api/v1/descartes/1
+
+### 11. GET e CRUD das tabelas principais
+GET {{host}}/api/v1/usuarios
+
+### GET
+GET {{host}}/api/v1/categorias
+
+### GET
+GET {{host}}/api/v1/maquinas
+
+### GET
+GET {{host}}/api/v1/instituicoes
+
+### PUT Usuario
+PUT {{host}}/api/v1/usuarios/1
+Content-Type: application/json
+
+{"nomeCompleto":"Pessoa Exemplo Atualizada","cpf":"12345678901"}
+
+### DELETE Usuario (somente se sem descartes)
+DELETE {{host}}/api/v1/usuarios/1

@@ -1,0 +1,85 @@
+classDiagram
+    class Usuario {
+      +Long idUsuario
+      +String nomeCompleto
+      +String cpf
+      +int pontosSaldo
+      +LocalDateTime dataCadastro
+    }
+    class CategoriaEletro {
+      +Long idCategoria
+      +String nomeCategoria
+      +int pontosPorUnidade
+    }
+    class Maquina {
+      +Long idMaquina
+      +String bairroLocalizacao
+      +String cep
+      +String statusOperacao
+    }
+    class Instituicao {
+      +Long idInstituicao
+      +String nomeFantasia
+      +String cnpj
+      +String tipoParceiro
+    }
+    class Descarte {
+      +Long idDescarte
+      +Long idUsuario
+      +Long idMaquina
+      +Long idCategoria
+      +Long idInstituicao
+      +LocalDateTime dataRegistro
+      +int quantidade
+      +int pontosGerados
+    }
+    class DescarteController {
+      +listar(idUsuario)
+      +buscar(id)
+      +criar(request)
+      +atualizar(id,request)
+      +excluir(id)
+    }
+    class DescarteBO {
+      +criar(request)
+      +atualizar(id,request)
+      +excluir(id)
+    }
+    class DescarteDAO {
+      +listar()
+      +buscar(id)
+      +criar(...)
+      +atualizar(...)
+      +excluir(id)
+    }
+    class CalculadoraPontos {
+      +calcular(quantidade, pontosPorUnidade)
+      +novoSaldo(saldoAtual, delta)
+    }
+    class UsuarioDAO
+    class CategoriaEletroDAO
+    class MaquinaDAO
+    class InstituicaoDAO
+    class UsuarioBO
+    class CategoriaEletroBO
+    class MaquinaBO
+    class InstituicaoBO
+    class UsuarioController
+    class CategoriaEletroController
+    class MaquinaController
+    class InstituicaoController
+    Usuario "1" --> "0..*" Descarte
+    CategoriaEletro "1" --> "0..*" Descarte
+    Maquina "1" --> "0..*" Descarte
+    Instituicao "1" --> "0..*" Descarte
+    DescarteController --> DescarteBO
+    DescarteBO --> DescarteDAO
+    DescarteBO --> UsuarioDAO
+    DescarteBO --> CategoriaEletroDAO
+    DescarteBO --> MaquinaDAO
+    DescarteBO --> InstituicaoDAO
+    DescarteBO ..> CalculadoraPontos
+    UsuarioController --> UsuarioBO
+    CategoriaEletroController --> CategoriaEletroBO
+    MaquinaController --> MaquinaBO
+    InstituicaoController --> InstituicaoBO
